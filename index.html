@@ -1,233 +1,1380 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Nyay Vistar — न्याय विस्तार | Expanding Justice Across India</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nyay Vistaar – Legal Services</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@300;400;600&family=Source+Serif+4:wght@400;600&display=swap" rel="stylesheet" />
 
-<link rel="stylesheet" href="styles.css">
+  <style>
+    /* ============================================================
+       RESET & BASE
+    ============================================================ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body { font-family: 'Source Sans 3', Arial, sans-serif; color: #272525; background: #fff; overflow-x: hidden; }
+    img { max-width: 100%; height: auto; display: block; }
+    ul { list-style: none; }
+
+    /* ============================================================
+       CSS VARIABLES
+    ============================================================ */
+    :root {
+      --primary:    #E03264;
+      --primary-alt:#FF0000;
+      --text-dark:  #272525;
+      --navy:       #1F3A5F;
+      --gold:       #C8A96A;
+      --gray-bar:   #808080;
+      --bronze:     #A76437;
+      --card-light: #F4D4F7;
+      --card-mid:   #DABADD;
+      --white:      #ffffff;
+      --font-serif: 'Source Serif 4', Georgia, serif;
+      --font-sans:  'Source Sans 3', Arial, sans-serif;
+      --section-pad: 80px 5%;
+      --section-pad-sm: 60px 5%;
+    }
+
+    /* ============================================================
+       TYPOGRAPHY HELPERS
+    ============================================================ */
+    .eyebrow {
+      font-family: var(--font-serif);
+      font-weight: 600;
+      font-size: clamp(0.9rem, 1.4vw, 1.1rem);
+      color: var(--navy);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+    .heading-xl {
+      font-family: var(--font-serif);
+      font-weight: 600;
+      font-size: clamp(2rem, 4vw, 3rem);
+      line-height: 1.15;
+      color: var(--primary);
+    }
+    .heading-lg {
+      font-family: var(--font-serif);
+      font-weight: 600;
+      font-size: clamp(1.5rem, 2.8vw, 2.2rem);
+      line-height: 1.2;
+      color: var(--primary-alt);
+    }
+    .heading-md {
+      font-family: var(--font-serif);
+      font-weight: 600;
+      font-size: clamp(1.1rem, 1.8vw, 1.4rem);
+      color: var(--text-dark);
+      margin-bottom: 0.5rem;
+    }
+    .body-text {
+      font-family: var(--font-sans);
+      font-size: clamp(0.9rem, 1.3vw, 1.1rem);
+      line-height: 1.7;
+      color: var(--text-dark);
+    }
+
+    /* ============================================================
+       DECORATIVE HEADER BARS (inner slides)
+    ============================================================ */
+    .deco-bars {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 32px;
+      pointer-events: none;
+      z-index: 1;
+    }
+    .deco-bars::before,
+    .deco-bars::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      height: 100%;
+    }
+    /* Left cluster */
+    .section-inner .bar-left {
+      position: absolute;
+      top: 0; left: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      padding-top: 8px;
+      z-index: 2;
+    }
+    .section-inner .bar-right {
+      position: absolute;
+      top: 0; right: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      padding-top: 8px;
+      z-index: 2;
+      align-items: flex-end;
+    }
+    .bar-strip {
+      height: 7px;
+      border-radius: 0;
+    }
+    .bar-strip.gray  { background: var(--gray-bar); width: 110px; }
+    .bar-strip.navy  { background: var(--navy);     width: 210px; }
+    .bar-strip.gold  { background: var(--gold);     width: 165px; }
+
+    /* ============================================================
+       STICKY NAVIGATION
+    ============================================================ */
+    #site-nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      background: rgba(31, 58, 95, 0.97);
+      backdrop-filter: blur(6px);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 5%;
+      height: 58px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.25);
+    }
+    .nav-brand {
+      font-family: var(--font-serif);
+      font-weight: 600;
+      font-size: 1.25rem;
+      color: var(--gold);
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    .nav-links {
+      display: flex;
+      gap: 0;
+      align-items: center;
+    }
+    .nav-links a {
+      font-family: var(--font-sans);
+      font-size: 0.78rem;
+      color: #e8e8e8;
+      text-decoration: none;
+      padding: 0 10px;
+      height: 58px;
+      display: flex;
+      align-items: center;
+      transition: color 0.2s, background 0.2s;
+      border-bottom: 2px solid transparent;
+      white-space: nowrap;
+    }
+    .nav-links a:hover {
+      color: var(--gold);
+      border-bottom-color: var(--gold);
+    }
+    .nav-toggle {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 8px;
+    }
+    .nav-toggle span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: #fff;
+      transition: all 0.3s;
+    }
+
+    /* ============================================================
+       SECTIONS SHARED
+    ============================================================ */
+    .section {
+      position: relative;
+      width: 100%;
+    }
+    .section-inner {
+      position: relative;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: var(--section-pad);
+    }
+    /* Spacer for fixed nav */
+    body { padding-top: 58px; }
+
+    /* ============================================================
+       SLIDE 1: HERO
+    ============================================================ */
+    #hero {
+      min-height: calc(100vh - 58px);
+      background-image: url('assets/images/slide1_Picture_5.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      display: flex;
+      align-items: center;
+    }
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to right, rgba(255,255,255,0.82) 0%, rgba(255,255,255,0.45) 55%, rgba(255,255,255,0.05) 100%);
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 60px 5%;
+      width: 100%;
+    }
+    .hero-title {
+      font-family: var(--font-serif);
+      font-weight: 600;
+      font-size: clamp(3rem, 6vw, 4.5rem);
+      color: var(--primary);
+      line-height: 1.1;
+      margin-bottom: 1.5rem;
+      max-width: 600px;
+    }
+    .hero-subtitle {
+      font-family: var(--font-sans);
+      font-size: clamp(1rem, 1.6vw, 1.2rem);
+      line-height: 1.7;
+      color: #272525;
+      max-width: 560px;
+    }
+    .hero-cta {
+      display: inline-block;
+      margin-top: 2rem;
+      padding: 14px 36px;
+      background: var(--primary);
+      color: #fff;
+      font-family: var(--font-serif);
+      font-weight: 600;
+      font-size: 1rem;
+      text-decoration: none;
+      border-radius: 2px;
+      transition: background 0.25s, transform 0.2s;
+    }
+    .hero-cta:hover { background: #c02050; transform: translateY(-1px); }
+
+    /* ============================================================
+       SLIDE 2: AGENDA
+    ============================================================ */
+    #agenda {
+      background: #fff;
+      min-height: 100vh;
+    }
+    .agenda-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: start;
+    }
+    .agenda-left { min-width: 0; }
+    .agenda-title {
+      font-family: var(--font-serif);
+      font-weight: 600;
+      font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+      color: var(--primary);
+      margin-bottom: 2.5rem;
+    }
+    .agenda-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .agenda-item {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 12px 0;
+      border-bottom: 1px solid #f0f0f0;
+    }
+    .agenda-num {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 30px;
+      background: var(--bronze);
+      color: #fff;
+      font-family: var(--font-serif);
+      font-weight: 600;
+      font-size: 0.9rem;
+      clip-path: polygon(0 0, 85% 0, 100% 50%, 85% 100%, 0 100%);
+      flex-shrink: 0;
+    }
+    .agenda-item-text {
+      font-family: var(--font-serif);
+      font-weight: 600;
+      font-size: clamp(0.85rem, 1.2vw, 1rem);
+      color: var(--text-dark);
+    }
+    .agenda-right {
+      position: relative;
+      height: 100%;
+      min-height: 500px;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .agenda-right img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 4px;
+    }
+
+    /* ============================================================
+       SLIDE 3: ABOUT
+    ============================================================ */
+    #about {
+      background: #fdfdfd;
+    }
+    .about-header { margin-bottom: 2.5rem; }
+    .about-body {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+    }
+    .about-text p {
+      font-family: var(--font-sans);
+      font-size: clamp(0.9rem, 1.3vw, 1.05rem);
+      line-height: 1.75;
+      color: var(--text-dark);
+      margin-bottom: 1.2rem;
+    }
+    .about-text p:last-child { margin-bottom: 0; }
+    .about-logo-wrap {
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      padding-top: 20px;
+    }
+    .about-logo-wrap img {
+      max-width: 280px;
+      border-radius: 4px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    }
+
+    /* ============================================================
+       SLIDE 4: OUR MOTIVATION
+    ============================================================ */
+    #motivation {
+      background: #fff;
+    }
+    .motivation-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: center;
+    }
+    .motivation-left { min-width: 0; }
+    .motivation-left .eyebrow { color: var(--navy); }
+    .motivation-text {
+      margin-top: 1.5rem;
+    }
+    .motivation-text p {
+      font-family: var(--font-sans);
+      font-size: clamp(0.9rem, 1.3vw, 1.05rem);
+      line-height: 1.75;
+      color: var(--text-dark);
+      margin-bottom: 1.2rem;
+    }
+    .motivation-text p:last-child { margin-bottom: 0; }
+    .motivation-right img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 4px;
+      max-height: 560px;
+    }
+
+    /* ============================================================
+       SLIDE 5: NATIONWIDE LEGAL SERVICES
+    ============================================================ */
+    #nationwide {
+      background: #faf8fc;
+    }
+    .nationwide-header { margin-bottom: 2.5rem; }
+    .nationwide-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .nw-card {
+      background: linear-gradient(135deg, #F4D4F7 0%, #e8c8eb 100%);
+      border-radius: 8px;
+      padding: 36px 28px;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.25s, box-shadow 0.25s;
+    }
+    .nw-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 30px rgba(224,50,100,0.12);
+    }
+    .nw-card-divider {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: #DABADD;
+      border-radius: 8px 0 0 8px;
+    }
+    .nw-card-icon {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.2rem;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+      overflow: hidden;
+    }
+    .nw-card-icon img { width: 36px; height: 36px; object-fit: contain; }
+    .nw-card-title {
+      font-family: var(--font-serif);
+      font-weight: 600;
+      font-size: clamp(1rem, 1.5vw, 1.2rem);
+      color: var(--text-dark);
+      margin-bottom: 0.75rem;
+    }
+    .nw-card-body {
+      font-family: var(--font-sans);
+      font-size: clamp(0.85rem, 1.1vw, 0.95rem);
+      line-height: 1.65;
+      color: var(--text-dark);
+    }
+
+    /* ============================================================
+       SLIDE 6: SECTORS
+    ============================================================ */
+    #sectors {
+      background: #fff;
+    }
+    .sectors-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: start;
+    }
+    .sectors-left { min-width: 0; }
+    .sectors-columns {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px 24px;
+      margin-top: 1.5rem;
+    }
+    .sector-item {
+      font-family: var(--font-sans);
+      font-size: clamp(0.85rem, 1.15vw, 1rem);
+      color: var(--text-dark);
+      padding: 9px 0;
+      border-bottom: 1px solid #ebebeb;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .sector-item::before {
+      content: '';
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--primary);
+      flex-shrink: 0;
+    }
+    .sectors-right {
+      position: relative;
+    }
+    .sectors-right img {
+      width: 100%;
+      object-fit: cover;
+      border-radius: 4px;
+      max-height: 560px;
+    }
+
+    /* ============================================================
+       SLIDE 7: USP
+    ============================================================ */
+    #usp {
+      background: linear-gradient(160deg, #fff 0%, #fdf5f8 100%);
+    }
+    .usp-header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+    .usp-header .heading-lg {
+      color: var(--primary-alt);
+    }
+    .usp-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 28px;
+    }
+    .usp-card {
+      background: linear-gradient(135deg, #fff 0%, #fdf0f4 100%);
+      border-radius: 10px;
+      padding: 36px 32px 36px 32px;
+      box-shadow: 0 2px 16px rgba(224,50,100,0.08);
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      transition: transform 0.25s, box-shadow 0.25s;
+      border: 1px solid rgba(224,50,100,0.08);
+    }
+    .usp-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 32px rgba(224,50,100,0.15);
+    }
+    .usp-icon-wrap {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      background: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .usp-icon-wrap img {
+      width: 40px;
+      height: 40px;
+      object-fit: contain;
+      filter: brightness(0) invert(1);
+    }
+    .usp-card-title {
+      font-family: var(--font-serif);
+      font-weight: 600;
+      font-size: clamp(1rem, 1.5vw, 1.2rem);
+      color: var(--text-dark);
+    }
+    .usp-card-body {
+      font-family: var(--font-sans);
+      font-size: clamp(0.85rem, 1.1vw, 0.95rem);
+      line-height: 1.65;
+      color: var(--text-dark);
+    }
+
+    /* ============================================================
+       SLIDE 8: OUR CLIENTS
+    ============================================================ */
+    #clients {
+      background: #fdfdfd;
+    }
+    .clients-header { margin-bottom: 2.5rem; }
+    .clients-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .client-card {
+      background: linear-gradient(135deg, #fff 0%, #faf0f8 100%);
+      border-radius: 8px;
+      padding: 30px 26px;
+      box-shadow: 0 2px 16px rgba(31,58,95,0.07);
+      border-left: 4px solid var(--primary);
+      transition: transform 0.25s, box-shadow 0.25s;
+    }
+    .client-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 28px rgba(31,58,95,0.12);
+    }
+    .client-card-title {
+      font-family: var(--font-serif);
+      font-weight: 600;
+      font-size: clamp(0.95rem, 1.4vw, 1.1rem);
+      color: var(--text-dark);
+      margin-bottom: 0.6rem;
+    }
+    .client-card-body {
+      font-family: var(--font-sans);
+      font-size: clamp(0.82rem, 1.1vw, 0.93rem);
+      line-height: 1.6;
+      color: #444;
+    }
+
+    /* ============================================================
+       SLIDE 9: CASE STATISTICS
+    ============================================================ */
+    #stats {
+      background: #fff;
+    }
+    .stats-header { margin-bottom: 1.5rem; }
+    .stats-highlight-label {
+      font-family: var(--font-serif);
+      font-weight: 600;
+      font-size: clamp(1.1rem, 1.8vw, 1.4rem);
+      color: var(--primary-alt);
+      margin-bottom: 2rem;
+      margin-top: 0.5rem;
+    }
+    .stats-numbers {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      flex-wrap: wrap;
+      background: linear-gradient(135deg, #1F3A5F 0%, #2a4f80 100%);
+      border-radius: 10px;
+      padding: 40px 20px;
+      margin-bottom: 2.5rem;
+    }
+    .stat-block {
+      flex: 1;
+      min-width: 160px;
+      text-align: center;
+      padding: 0 24px;
+    }
+    .stat-number {
+      font-family: var(--font-serif);
+      font-weight: 600;
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      color: var(--gold);
+      line-height: 1;
+      margin-bottom: 0.4rem;
+    }
+    .stat-label {
+      font-family: var(--font-sans);
+      font-size: clamp(0.8rem, 1.1vw, 0.95rem);
+      color: #ddd;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .stat-divider {
+      font-size: 2rem;
+      color: var(--gold);
+      opacity: 0.5;
+      padding: 0 8px;
+      align-self: center;
+    }
+    .stats-body {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+    .stats-point {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+    }
+    .stats-point-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--primary);
+      flex-shrink: 0;
+      margin-top: 6px;
+    }
+    .stats-point p {
+      font-family: var(--font-sans);
+      font-size: clamp(0.85rem, 1.1vw, 0.95rem);
+      line-height: 1.65;
+      color: var(--text-dark);
+    }
+
+    /* ============================================================
+       SLIDE 10: OUR PRESENCE (INDIA)
+    ============================================================ */
+    #presence {
+      background: #fafafa;
+    }
+    .presence-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: center;
+    }
+    .presence-list {
+      margin-top: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .presence-item {
+      font-family: var(--font-sans);
+      font-size: clamp(0.85rem, 1.2vw, 1rem);
+      color: var(--text-dark);
+      padding: 9px 12px;
+      border-bottom: 1px solid #ebebeb;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .presence-item::before {
+      content: '▸';
+      color: var(--primary);
+      font-size: 0.8rem;
+      flex-shrink: 0;
+    }
+    .presence-right img {
+      width: 100%;
+      border-radius: 6px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    }
+
+    /* ============================================================
+       SLIDE 11: INTERNATIONAL PRESENCE & CONTACT
+    ============================================================ */
+    #international {
+      background: #fff;
+    }
+    .intl-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: start;
+    }
+    .intl-countries {
+      margin-top: 1.5rem;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px 24px;
+    }
+    .intl-country {
+      font-family: var(--font-sans);
+      font-size: clamp(0.9rem, 1.3vw, 1.05rem);
+      color: var(--text-dark);
+      padding: 10px 12px;
+      background: #f8f5fb;
+      border-left: 3px solid var(--primary);
+      border-radius: 0 4px 4px 0;
+      font-weight: 400;
+    }
+    .contact-box {
+      margin-top: 2.5rem;
+      background: linear-gradient(135deg, var(--navy) 0%, #2a4f80 100%);
+      color: #fff;
+      border-radius: 8px;
+      padding: 28px 32px;
+    }
+    .contact-box h3 {
+      font-family: var(--font-serif);
+      font-weight: 600;
+      font-size: 1.1rem;
+      color: var(--gold);
+      margin-bottom: 0.8rem;
+    }
+    .contact-box p {
+      font-family: 'Lucida Sans Unicode', var(--font-sans);
+      font-size: clamp(0.85rem, 1.1vw, 0.95rem);
+      color: #ddd;
+      line-height: 1.8;
+    }
+    .contact-box a {
+      color: var(--gold);
+      text-decoration: none;
+    }
+    .contact-box a:hover { text-decoration: underline; }
+    .intl-right img {
+      width: 100%;
+      border-radius: 6px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+      max-height: 480px;
+      object-fit: cover;
+    }
+
+    /* ============================================================
+       SECTION DIVIDER BARS (inner slides decoration)
+    ============================================================ */
+    .deco-header {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 42px;
+      z-index: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .deco-header .bar-group {
+      position: absolute;
+      top: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      padding-top: 7px;
+    }
+    .deco-header .bar-group.left { left: 0; }
+    .deco-header .bar-group.right { right: 0; align-items: flex-end; }
+    .deco-header .b1 { height: 7px; background: var(--gray-bar); width: 104px; }
+    .deco-header .b2 { height: 7px; background: var(--navy);     width: 200px; }
+    .deco-header .b3 { height: 8px; background: var(--gold);     width: 160px; }
+
+    /* ============================================================
+       FOOTER
+    ============================================================ */
+    footer {
+      background: var(--navy);
+      color: #ccc;
+      text-align: center;
+      padding: 28px 5%;
+      font-family: var(--font-sans);
+      font-size: 0.85rem;
+    }
+    footer span { color: var(--gold); font-weight: 600; }
+
+    /* ============================================================
+       RESPONSIVE — TABLET (max-width: 1024px)
+    ============================================================ */
+    @media (max-width: 1024px) {
+      .agenda-grid,
+      .motivation-grid,
+      .sectors-grid,
+      .presence-grid,
+      .intl-grid { grid-template-columns: 1fr; }
+
+      .agenda-right { min-height: 320px; }
+      .motivation-right img,
+      .sectors-right img { max-height: 340px; }
+
+      .about-body { grid-template-columns: 1fr; }
+      .about-logo-wrap { justify-content: flex-start; }
+
+      .usp-grid { grid-template-columns: repeat(2, 1fr); }
+      .clients-grid { grid-template-columns: repeat(2, 1fr); }
+      .nationwide-cards { grid-template-columns: repeat(2, 1fr); }
+
+      .stats-body { grid-template-columns: 1fr; }
+    }
+
+    /* ============================================================
+       RESPONSIVE — MOBILE (max-width: 640px)
+    ============================================================ */
+    @media (max-width: 640px) {
+      :root { --section-pad: 56px 4%; }
+
+      #site-nav { padding: 0 4%; }
+      .nav-links {
+        display: none;
+        position: fixed;
+        top: 58px; left: 0; right: 0;
+        flex-direction: column;
+        background: var(--navy);
+        padding: 12px 0 20px;
+        gap: 0;
+        max-height: calc(100vh - 58px);
+        overflow-y: auto;
+      }
+      .nav-links.open { display: flex; }
+      .nav-links a {
+        height: auto;
+        padding: 12px 24px;
+        border-bottom: 1px solid rgba(255,255,255,0.08);
+        font-size: 0.9rem;
+      }
+      .nav-toggle { display: flex; }
+
+      .hero-title { font-size: clamp(2rem, 10vw, 2.8rem); }
+      .hero-subtitle { font-size: 1rem; }
+
+      .usp-grid,
+      .clients-grid,
+      .nationwide-cards,
+      .intl-countries { grid-template-columns: 1fr; }
+
+      .stats-numbers { flex-direction: column; gap: 24px; padding: 32px 16px; }
+      .stat-divider { display: none; }
+
+      .sectors-columns { grid-template-columns: 1fr; }
+
+      .deco-header { display: none; }
+    }
+  </style>
 </head>
+
 <body>
 
-<!-- NAV -->
-<nav id="main-nav">
-  <a class="nav-logo" href="#">
-    <div class="logo-mark">न</div>
-    <div style="display:flex;flex-direction:column;line-height:1.1">
-      <span class="logo-en">Nyay <span>Vistar</span></span>
-      <span class="logo-hi">न्याय विस्तार</span>
+  <!-- ============================================================
+       NAVIGATION
+  ============================================================ -->
+  <nav id="site-nav" role="navigation" aria-label="Main navigation">
+    <a class="nav-brand" href="#hero">Nyay Vistaar</a>
+    <div class="nav-links" id="nav-links">
+      <a href="#about">About</a>
+      <a href="#motivation">Motivation</a>
+      <a href="#nationwide">Pan India</a>
+      <a href="#sectors">Sectors</a>
+      <a href="#usp">USP</a>
+      <a href="#clients">Clients</a>
+      <a href="#stats">Stats</a>
+      <a href="#presence">Presence</a>
+      <a href="#international">Global</a>
     </div>
-  </a>
-  <ul class="nav-links">
-    <li><a href="#">Practice Areas</a></li><li><a href="#">News/Insights</a></li><li><a href="#">Podcast/Videos</a></li><li><a href="#">Blogs</a></li><li><a href="#about">About</a></li>
-  </ul>
-  <div class="nav-cta"><a href="#" class="btn-g">Sign In</a><a href="#" class="btn-p">Book a Demo</a></div>
-</nav>
+    <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
 
-<!-- HERO — Scales of Justice photo + cream wash -->
-<section class="hero">
-  <div class="hero-photo"></div>
-  <div class="hero-wash"></div>
-  <div class="hero-dots"></div>
-  <div class="flag-bar"><span></span><span></span><span></span></div>
+  <!-- ============================================================
+       SLIDE 1: HERO
+  ============================================================ -->
+  <section id="hero" class="section" aria-label="Hero">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <h1 class="hero-title">Nyay Vistaar</h1>
+      <p class="hero-subtitle">Your trusted partner for comprehensive legal solutions across India and overseas. We combine deep legal expertise with a client-centric approach to navigate the complexities of the legal landscape.</p>
+      <a href="#about" class="hero-cta">Discover More</a>
+    </div>
+  </section>
 
-  <!-- Scales of Justice SVG — left -->
-  <svg class="art-scales" viewBox="0 0 280 340" fill="none">
-    <rect x="120" y="292" width="40" height="44" rx="3" fill="#0E1C38"/>
-    <rect x="137" y="64" width="6" height="230" fill="#0E1C38"/>
-    <rect x="40" y="64" width="200" height="6" rx="3" fill="#0E1C38"/>
-    <circle cx="140" cy="38" r="22" stroke="#C8660A" stroke-width="4" fill="none"/>
-    <circle cx="140" cy="38" r="8" fill="#C8660A"/>
-    <line x1="60" y1="70" x2="60" y2="148" stroke="#0E1C38" stroke-width="2" stroke-dasharray="4 3"/>
-    <line x1="220" y1="70" x2="220" y2="136" stroke="#0E1C38" stroke-width="2" stroke-dasharray="4 3"/>
-    <ellipse cx="60" cy="160" rx="44" ry="14" fill="none" stroke="#0E1C38" stroke-width="2.5"/>
-    <ellipse cx="220" cy="148" rx="44" ry="14" fill="none" stroke="#0E1C38" stroke-width="2.5"/>
-    <circle cx="50" cy="156" r="7" fill="rgba(14,28,56,0.25)"/>
-    <circle cx="70" cy="154" r="5" fill="rgba(14,28,56,0.18)"/>
-  </svg>
-
-  <!-- Circuit board SVG — top right -->
-  <svg class="art-circuit" viewBox="0 0 300 300" fill="none">
-    <line x1="0" y1="80" x2="300" y2="80" stroke="#0E1C38" stroke-width=".7"/><line x1="0" y1="160" x2="300" y2="160" stroke="#0E1C38" stroke-width=".7"/><line x1="0" y1="240" x2="300" y2="240" stroke="#0E1C38" stroke-width=".7"/>
-    <line x1="80" y1="0" x2="80" y2="300" stroke="#0E1C38" stroke-width=".7"/><line x1="160" y1="0" x2="160" y2="300" stroke="#0E1C38" stroke-width=".7"/><line x1="240" y1="0" x2="240" y2="300" stroke="#0E1C38" stroke-width=".7"/>
-    <circle cx="80" cy="80" r="5" fill="#C8660A"/><circle cx="160" cy="160" r="5" fill="#C8660A"/><circle cx="240" cy="80" r="5" fill="#C8660A"/>
-    <circle cx="80" cy="240" r="8" fill="none" stroke="#C8660A" stroke-width="1.5"/><circle cx="240" cy="240" r="5" fill="#0E1C38"/>
-    <rect x="118" y="118" width="84" height="44" rx="4" stroke="#0E1C38" stroke-width="1" fill="rgba(14,28,56,0.04)"/>
-    <line x1="118" y1="134" x2="96" y2="134" stroke="#0E1C38" stroke-width="1"/><line x1="118" y1="148" x2="96" y2="148" stroke="#0E1C38" stroke-width="1"/>
-    <line x1="202" y1="134" x2="224" y2="134" stroke="#0E1C38" stroke-width="1"/><line x1="202" y1="148" x2="224" y2="148" stroke="#0E1C38" stroke-width="1"/>
-    <path d="M80 80 L80 160 L160 160" stroke="#C8660A" stroke-width=".8" fill="none" stroke-dasharray="3 2"/>
-    <path d="M240 80 L240 160 L160 160" stroke="#0E1C38" stroke-width=".8" fill="none" stroke-dasharray="3 2"/>
-  </svg>
-
-  <!-- Ashoka Chakra — large faint centered -->
-  <svg class="art-chakra" viewBox="0 0 620 620" fill="none">
-    <circle cx="310" cy="310" r="298" stroke="#C8660A" stroke-width="1.5"/>
-    <circle cx="310" cy="310" r="234" stroke="#0E1C38" stroke-width="1"/>
-    <circle cx="310" cy="310" r="34" fill="#C8660A" opacity=".5"/>
-    <circle cx="310" cy="310" r="18" fill="#0E1C38"/>
-    <g stroke="#0E1C38" stroke-width="1.2">
-      <line x1="310" y1="12" x2="310" y2="608"/><line x1="12" y1="310" x2="608" y2="310"/>
-      <line x1="98" y1="98" x2="522" y2="522"/><line x1="522" y1="98" x2="98" y2="522"/>
-      <line x1="188" y1="36" x2="432" y2="584"/><line x1="36" y1="188" x2="584" y2="432"/>
-      <line x1="432" y1="36" x2="188" y2="584"/><line x1="36" y1="432" x2="584" y2="188"/>
-      <line x1="260" y1="14" x2="244" y2="12"/><line x1="360" y1="14" x2="376" y2="12"/>
-    </g>
-  </svg>
-
-  <!-- Floating stat cards -->
-  <div class="fcard fc-1"><div class="fc-lbl">Cases</div><div class="fc-val">1000+</div></div>
-  <div class="fcard fc-2"><div class="fc-lbl">Legal collaboration</div><div class="fc-val" style="color:var(--saffron)">5000+</div></div>
-  <div class="fcard fc-3"><div class="fc-lbl">Court Presence</div><div class="fc-val">26K+</div></div>
-  <div class="hero-content">
-    <div class="h-badge"><span class="bdot"></span>India's Premier Legal Intelligence Platform</div>
-    <div class="h-deva">न्याय · विस्तार · प्रौद्योगिकी</div>
-    <h1><em>Justice</em><br><strong>Expanded</strong> Across Bharat</h1>
-    <p class="h-sub">Nyay Vistar unites AI-powered litigation tracking, smart contract management, and online dispute resolution — purpose-built for India's legal ecosystem, from High Courts to Gram Nyayalayas.</p>
-  </div>
-</section>
-
-<!-- TRUST BAR -->
-<div class="trust-bar">
-  <div class="t-lbl">Trusted by India's leading enterprises, banks &amp; law firms</div>
-</div>
-
-<!-- STATS — Indian Parliament photo -->
-<section class="stats-sec">
-  <div class="st-photo"></div><div class="st-wash"></div><div class="st-flag"><span></span><span></span><span></span></div>
-  <div class="st-grid">
-    <div class="s-item"><div class="s-num" data-val="19" data-suf="K+">19<span class="u">K+</span></div><div class="s-lbl">Court &amp; Tribunal Forums</div><div class="s-sub">Tracked across India</div></div>
-    <div class="s-item"><div class="s-num" data-val="50" data-suf="L+">50<span class="u">L+</span></div><div class="s-lbl">Legal Notices / Month</div><div class="s-sub">Automated delivery</div></div>
-    <div class="s-item"><div class="s-num" data-val="1" data-suf="L+">1<span class="u">L+</span></div><div class="s-lbl">Contracts Managed</div><div class="s-sub">With AI intelligence</div></div>
-    <div class="s-item"><div class="s-num" data-val="60" data-suf="%">60<span class="u">%</span></div><div class="s-lbl">Faster Contract Closure</div><div class="s-sub">Average client result</div></div>
-  </div>
-</section>
-
-<!-- ABOUT — law library photo -->
-<section class="about-sec" id="about">
-  <svg style="position:absolute;right:-80px;top:-80px;width:480px;height:480px;opacity:.03;pointer-events:none" viewBox="0 0 500 500" fill="none"><circle cx="250" cy="250" r="230" stroke="#C8660A" stroke-width=".8" stroke-dasharray="5 8"/><circle cx="250" cy="250" r="175" stroke="#0E1C38" stroke-width=".5" stroke-dasharray="5 8"/><circle cx="250" cy="250" r="120" stroke="#C8660A" stroke-width=".5" stroke-dasharray="5 8"/></svg>
-  <div class="about-inner">
-    <div class="about-visual">
-      <div class="vis-photo">
-        <img src="https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=900&q=82&fit=crop" alt="Legal Technology India" loading="lazy"/>
-        <div class="vis-overlay"></div>
-        <div class="vis-cap"><h3>India's Legal Infrastructure — Digitised</h3><p>From Supreme Court to Gram Nyayalayas</p></div>
+  <!-- ============================================================
+       SLIDE 2: AGENDA
+  ============================================================ -->
+  <section id="agenda" class="section" aria-label="Agenda">
+    <div class="section-inner">
+      <div class="agenda-grid">
+        <div class="agenda-left">
+          <h2 class="agenda-title">Agenda</h2>
+          <ol class="agenda-list" role="list">
+            <li class="agenda-item">
+              <span class="agenda-num">1</span>
+              <span class="agenda-item-text">About</span>
+            </li>
+            <li class="agenda-item">
+              <span class="agenda-num">2</span>
+              <span class="agenda-item-text">Our Motivation: Market Challenges and Vision</span>
+            </li>
+            <li class="agenda-item">
+              <span class="agenda-num">3</span>
+              <span class="agenda-item-text">Resolving Legal Challenges Pan India and Overseas</span>
+            </li>
+            <li class="agenda-item">
+              <span class="agenda-num">4</span>
+              <span class="agenda-item-text">Our Aim: Quality and Fast Resolution</span>
+            </li>
+            <li class="agenda-item">
+              <span class="agenda-num">5</span>
+              <span class="agenda-item-text">Services</span>
+            </li>
+            <li class="agenda-item">
+              <span class="agenda-num">6</span>
+              <span class="agenda-item-text">Our Clients</span>
+            </li>
+            <li class="agenda-item">
+              <span class="agenda-num">7</span>
+              <span class="agenda-item-text">Our Strengths and Unique Selling Proposition (USP)</span>
+            </li>
+            <li class="agenda-item">
+              <span class="agenda-num">8</span>
+              <span class="agenda-item-text">Case Statistics and Success Stories</span>
+            </li>
+            <li class="agenda-item">
+              <span class="agenda-num">9</span>
+              <span class="agenda-item-text">Why Choose Nyay Vistaar?</span>
+            </li>
+          </ol>
+        </div>
+        <div class="agenda-right">
+          <img src="assets/images/slide2_Picture_40.png" alt="Legal services overview" loading="lazy" />
+        </div>
       </div>
-      <div class="vbadge1"><div class="vb-lbl">G2 Recognition</div><div class="vb-val">High Performer</div><div class="vb-sub">Legal SaaS 2025</div></div>
-      <div class="vbadge2"><div class="vb2-lbl">Agami Prize</div><div class="vb2-val">Winner 🏆</div></div>
     </div>
-    <div style="position:relative;z-index:1">
-      <div class="eyebrow">About Nyay Vistar</div>
-      <div class="divider"></div>
-      <h2 class="sec-title">Bridging the Gap Between <em>Law &amp; Technology</em></h2>
-      <p class="sec-desc">NyayVistaar is a technology-enabled legal services platform offering professional legal services in India and across international jurisdictions. We work in collaboration with a global network of experienced lawyers and legal professionals to provide reliable, jurisdiction-specific legal support to individuals, startups, enterprises, and multinational businesses. With a strong foundation in Indian legal services, NyayVistaar supports clients with legal advisory, documentation, compliance, corporate, and commercial legal requirements. At the same time, our international legal network enables seamless access to global legal support, cross-border legal services, and coordination with international lawyers and law firms, ensuring accurate guidance across multiple jurisdictions.
-</p>
-      <p class="sec-desc" style="margin-bottom:32px">From SARFAESI recovery for the largest NBFCs to Gram Nyayalaya tracking for rural legal aid — our platform speaks the language of Indian law, in Hindi and English.</p>
+  </section>
+
+  <!-- ============================================================
+       SLIDE 3: ABOUT
+  ============================================================ -->
+  <section id="about" class="section" style="background:#fdfdfd;" aria-label="About Nyay Vistaar">
+    <div class="deco-header" aria-hidden="true">
+      <div class="bar-group left"><div class="b1"></div><div class="b2"></div><div class="b3"></div></div>
+      <div class="bar-group right"><div class="b1"></div><div class="b2"></div><div class="b3"></div></div>
     </div>
-  </div>
-</section>
-
-<!-- SERVICES — legal documents photo wash -->
-<section class="svc-sec">
-  <div class="svc-photo"></div><div class="svc-wash"></div>
-  <div class="svc-z">
-    <div class="eyebrow">Our Services</div>
-    <h2 class="sec-title">One Services. <em>Every</em> Legal Workflow.</h2>
-    <div class="svc-grid">
-      <div class="svc-card"><div class="svc-icon">🏛️</div><div class="svc-title">Corporate Commercial</div><p class="svc-desc">At NyayVistaar, our Corporate & Commercial practice provides strategic legal support to businesses at every stage of their growth.</p><ul class="svc-feats"><li>Comprehensive Corporate Legal Support</li><li>End-to-End Business Structuring</li><li>Strategic Transaction & Documentation Expertise</li><li>Business-Focused Legal Advisory</li></ul></div>
-      
-      <div class="svc-card"><div class="svc-icon">📋</div><div class="svc-title">Contract Management</div><p class="svc-desc">At NyayVistaar, our Contract Management services help individuals, startups, and businesses efficiently handle their legal agreements from creation to completion.</p><ul class="svc-feats"><li>We create clear, valid contracts</li><li>We support negotiation and changes.</li><li>We simplify contract management.</li><li>We ensure legal compliance</li></ul></div>
-      
-      <div class="svc-card"><div class="svc-icon">⚖️</div><div class="svc-title">Startup Advisory</div><p class="svc-desc">At NyayVistaar, our Startup Advisory services are designed to guide entrepreneurs and emerging businesses through the legal and regulatory aspects of starting and growing a company.</p><ul class="svc-feats"><li>We help choose the right business structure</li><li>We ensure compliance with laws and rules</li><li>We reduce risks for your business</li><li>We help you focus on innovation and growth</li></ul></div>
-
-      <div class="svc-card"><div class="svc-icon">🌐</div><div class="svc-title">NBFC/FINTECH Advisory/Banking</div><p class="svc-desc">NyayVistaar offers comprehensive legal advisory services for businesses operating in the NBFC, FinTech, and banking sectors.</p><ul class="svc-feats"><li>We help with regulatory compliance and licensing.</li><li>We handle financial and partnership disputes</li><li>We provide legal representation when needed</li><li>We assist in unfreezing bank accounts</li></ul></div>
-
-      <div class="svc-card"><div class="svc-icon">🏢</div><div class="svc-title">Labour/Employment</div><p class="svc-desc">NyayVistaar provides expert legal guidance on labour and employment matters for businesses of all sizes.</p><ul class="svc-feats"><li>We provide legal support on labour and employment matters.</li><li>We ensure compliance with labour laws.</li><li>We advise on workplace policies and HR practices</li><li>We support dispute resolution and grievance handling</li></ul></div>
-
-      <div class="svc-card"><div class="svc-icon">🤖</div><div class="svc-title">Incorporation/Licensings</div><p class="svc-desc">NyayVistaar provides end-to-end legal support for businesses looking to incorporate and obtain the necessary licenses to operate legally and efficiently.</p><ul class="svc-feats"><li>We provide end-to-end support for business incorporation</li><li>We assist with company registration.</li><li>We help obtain licenses and permits.</li><li>We assist with government approvals</li></ul></div>
-
-      <div class="svc-card"><div class="svc-icon">🤖</div><div class="svc-title">Tender Management</div><p class="svc-desc">NyayVistaar offers comprehensive legal and advisory support for businesses participating in tenders and procurement processes.</p><ul class="svc-feats"><li>We provide end-to-end support for tender participation</li><li>We assist with bid preparation and submission.</li><li>We help navigate regulatory requirements.</li><li>We support contract negotiation and finalization</li></ul></div>
-
-      <div class="svc-card"><div class="svc-icon">🤖</div><div class="svc-title">Real Estate & Hospitality Industry</div><p class="svc-desc">NyayVistaar provides specialized legal advisory services for businesses and investors in the real estate and hospitality sectors.</p><ul class="svc-feats"><li>We provide legal advisory for real estate and hospitality.</li><li>We assist with property acquisition and leases.</li><li>We draft sale and purchase agreements.</li><li>We assist hotels and restaurants with compliance</li></ul></div>
-
-      <div class="svc-card"><div class="svc-icon">🤖</div><div class="svc-title">IPR</div><p class="svc-desc">NyayVistaar offers expert legal services to protect and manage your intellectual property assets.</p><ul class="svc-feats"><li>We assist with trademark and copyright registration</li><li>We support patent filing and design rights.</li><li>We manage your IP portfolio.</li><li>We enforce your legal rights</li></ul></div>
-
-
-      <div class="svc-card"><div class="svc-icon">🤖</div><div class="svc-title">Insolvency & Bankruptcy </div><p class="svc-desc">NyayVistaar provides professional legal guidance on insolvency and bankruptcy matters for businesses and individuals.</p><ul class="svc-feats"><li>We provide guidance on insolvency and bankruptcy</li><li>We help with bankruptcy filing.</li><li>We help recover dues.</li><li>We support settlement negotiations</li></ul></div>
-
-      <div class="svc-card"><div class="svc-icon">🤖</div><div class="svc-title">Dispute Resolution & Litigation</div><p class="svc-desc">NyayVistaar offers comprehensive legal support for dispute resolution and litigation across industries.</p><ul class="svc-feats"><li>We provide legal advisory for real estate and hospitality.</li><li>We assist with property acquisition and leases.</li><li>We draft sale and purchase agreements.</li><li>We assist hotels and restaurants with compliance</li></ul></div>
-
-      <div class="svc-card"><div class="svc-icon">🤖</div><div class="svc-title">Criminal Offences </div><p class="svc-desc">NyayVistaar provides expert legal support for individuals and businesses facing criminal allegations, including white-collar crimes and offences under the Negotiable Instruments (NI) Act.</p><ul class="svc-feats"><li>We assist with trademark and copyright registration</li><li>We support patent filing and design rights.</li><li>We manage your IP portfolio.</li><li>We enforce your legal rights</li></ul></div>
-
+    <div class="section-inner" style="padding-top:80px;">
+      <div class="about-header">
+        <h2 class="heading-xl">About</h2>
+      </div>
+      <div class="about-body">
+        <div class="about-text">
+          <p><strong>Nyay Vistaar</strong> is a technology-enabled legal services platform offering professional legal services in India and across international jurisdictions. We work in collaboration with a global network of experienced lawyers and legal professionals to provide reliable, jurisdiction-specific legal support to individuals, startups, enterprises, and multinational businesses.</p>
+          <p>With a strong foundation in Indian legal services, <strong>NyayVistaar</strong> supports clients with legal advisory, documentation, compliance, corporate, and commercial legal requirements. Our international legal network enables seamless access to global legal support, cross-border legal services, and coordination with international lawyers and law firms.</p>
+          <p>As businesses and individuals increasingly operate beyond borders, <strong>NyayVistaar</strong> bridges the gap between Indian law and international legal systems. Our integrated legal services model simplifies complex domestic and global legal processes, offering a single point of access for both India-focused legal matters and international legal assistance.</p>
+          <p>Technology forms the backbone of Nyay Vistaar's legal services platform. Through secure digital systems, we enable efficient communication, structured case management, and transparent legal processes — delivering high-quality online legal services in India and worldwide.</p>
+        </div>
+        <div class="about-logo-wrap">
+          <img src="assets/images/slide3_Picture_8.jpg" alt="Nyay Vistaar – Legal Excellence" loading="lazy" />
+        </div>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- HOW IT WORKS — circuit board photo -->
-<section class="proc-sec">
-  <div class="proc-photo"></div><div class="proc-wash"></div>
-  <div class="proc-z">
-    <div class="eyebrow" style="text-align:center">How It Works</div>
-    <h2 class="sec-title" style="text-align:center;margin:0 auto 16px">From Onboarding to <em>Insight</em> in Days</h2>
-    <p class="sec-desc" style="text-align:center;margin:0 auto 0">Deploy Nyay Vistar on cloud or your own servers with full data migration, custom AI configuration, and dedicated support.</p>
-    <div class="proc-steps">
-      <div class="proc-step"><div class="step-num">01</div><div class="step-t">Data Migration</div><p class="step-d">We migrate your existing cases, contracts, and matters — zero manual entry, zero disruption.</p></div>
-      <div class="proc-step"><div class="step-num">02</div><div class="step-t">Custom AI Setup</div><p class="step-d">Configure AI models for your practice areas, clause playbooks, and regulatory requirements.</p></div>
-      <div class="proc-step"><div class="step-num">03</div><div class="step-t">Integrations</div><p class="step-d">Connect SAP, Salesforce, Oracle, Gmail, DocuSign, Leegality, and your existing stack.</p></div>
-      <div class="proc-step"><div class="step-num">04</div><div class="step-t">Go Live &amp; Scale</div><p class="step-d">Go live within days. Our team monitors performance and optimises workflows continuously.</p></div>
+  <!-- ============================================================
+       SLIDE 4: OUR MOTIVATION
+  ============================================================ -->
+  <section id="motivation" class="section" aria-label="Our Motivation">
+    <div class="deco-header" aria-hidden="true">
+      <div class="bar-group left"><div class="b1"></div><div class="b2"></div><div class="b3"></div></div>
+      <div class="bar-group right"><div class="b1"></div><div class="b2"></div><div class="b3"></div></div>
     </div>
-  </div>
-</section>
-
-<!-- TESTIMONIALS — legal documents photo -->
-<section class="testi-sec">
-  <div class="testi-photo"></div><div class="testi-wash"></div>
-  <div class="testi-z">
-    <div class="eyebrow">Client Stories</div>
-    <h2 class="sec-title" style="color:#fff">Trusted by <em>India's Best</em></h2>
-    <div class="tgrid">
-      <div class="tcard"><p class="tcard-text">Nyay Vistar transformed how our legal team handles the 9,000-odd cases we track annually. The NCLT and SARFAESI workflow alone saved us three FTEs.</p><div class="tcard-auth"><div class="tcard-av">RK</div><div><div class="stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div><div class="tcard-name">Rajesh Kulkarni</div><div class="tcard-role">Head – Legal, Bajaj Finserv</div></div></div></div>
-      <div class="tcard"><p class="tcard-text">Contract turnaround cut from 18 days to under 7. The AI redlining understands Companies Act, FEMA, and IP nuances remarkably well for Indian law.</p><div class="tcard-auth"><div class="tcard-av">PM</div><div><div class="stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div><div class="tcard-name">Priya Mehrotra</div><div class="tcard-role">CLO, Adani Enterprises</div></div></div></div>
-      <div class="tcard"><p class="tcard-text">The practice management module is exceptional. Client auto-updates, causelist alerts, billing — it has dramatically reduced our administrative overhead.</p><div class="tcard-auth"><div class="tcard-av">SJ</div><div><div class="stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div><div class="tcard-name">Seema Jhingan</div><div class="tcard-role">Founding Partner, LexCounsel</div></div></div></div>
+    <div class="section-inner" style="padding-top:80px;">
+      <div class="motivation-grid">
+        <div class="motivation-left">
+          <p class="eyebrow">Our Motivation</p>
+          <h2 class="heading-xl">Market Challenges and Vision</h2>
+          <div class="motivation-text">
+            <p>The Indian and overseas legal landscape presents unique challenges, from complex regulatory frameworks to diverse regional and international jurisdictions. At Nyay Vistaar, we provide comprehensive legal services across India and overseas, simplifying these complexities for our clients through clear, effective, and ethically sound guidance.</p>
+            <p>Our mission is to deliver accessible, efficient, and high-quality legal services globally through technology and collaboration.</p>
+            <p>To build a globally connected legal ecosystem that integrates Indian and international legal expertise on a single platform.</p>
+            <p><strong>NyayVistaar</strong> is your trusted partner for Indian and international legal solutions — empowering you to navigate legal challenges with confidence.</p>
+          </div>
+        </div>
+        <div class="motivation-right">
+          <img src="assets/images/slide4_Picture_12.png" alt="Legal expertise and vision" loading="lazy" />
+        </div>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- CTA — scales of justice photo -->
-<section class="cta-sec">
-  <div class="cta-photo"></div><div class="cta-wash"></div><div class="cta-dots"></div>
-  <div class="cta-z">
-    <div class="eyebrow" style="text-align:center">Get Started</div>
-    <h2 class="sec-title">Ready to Expand<br><em>Justice Through Technology?</em></h2>
-    <p class="sec-desc">Join 500+ enterprises, banks, and law firms across India who trust Nyay Vistar to manage their most critical legal work — from the High Courts to every corner of Bharat.</p>
-    <div class="cta-actions"><a href="#" class="btn-hero">Book a Free Demo →</a><a href="#" class="btn-hero-o" style="background:rgba(255,255,255,0.7)">View Pricing</a></div>
-    <p style="font-size:13px;color:var(--muted);margin-top:22px;font-weight:300">No credit card required · 14-day free trial · SOC 2 compliant · DPDPA ready</p>
-  </div>
-</section>
-
-<!-- FOOTER -->
-<footer>
-  <div class="footer-photo"></div><div class="footer-wash"></div>
-  <div class="f-grid">
-    <div>
-      <div class="nav-logo" style="margin-bottom:0"><div class="logo-mark">न</div><div style="display:flex;flex-direction:column;line-height:1.1"><span class="f-en">Nyay <span>Vistar</span></span><span class="f-hi">न्याय विस्तार</span></div></div>
-      <p class="f-tagline">Expanding justice through technology. Built for India's enterprises, banks, law firms, and tribunals.</p>
-      <div class="f-certs"><span>ISO 27001</span><span>SOC 2</span><span>DPDPA</span></div>
+  <!-- ============================================================
+       SLIDE 5: NATIONWIDE LEGAL SERVICES
+  ============================================================ -->
+  <section id="nationwide" class="section" style="background:#faf8fc;" aria-label="Nationwide Legal Services">
+    <div class="deco-header" aria-hidden="true">
+      <div class="bar-group left"><div class="b1"></div><div class="b2"></div><div class="b3"></div></div>
+      <div class="bar-group right"><div class="b1"></div><div class="b2"></div><div class="b3"></div></div>
     </div>
-    <div><div class="f-col-t">Platform</div><ul class="f-links"><li><a href="#">Enterprise Legal Mgmt</a></li><li><a href="#">Contract Lifecycle</a></li><li><a href="#">Legal Collections</a></li><li><a href="#">Online Dispute Resolution</a></li><li><a href="#">Practice Management</a></li><li><a href="#">AI Document Suite</a></li></ul></div>
-    <div><div class="f-col-t">Practice Areas</div><ul class="f-links"><li><a href="#">Corporate &amp; Commercial</a></li><li><a href="#">Banking &amp; NBFC</a></li><li><a href="#">Intellectual Property</a></li><li><a href="#">Arbitration &amp; ADR</a></li><li><a href="#">Technology &amp; TMT</a></li><li><a href="#">Infrastructure</a></li></ul></div>
-    <div><div class="f-col-t">Company</div><ul class="f-links"><li><a href="#">About Us</a></li><li><a href="#">Case Studies</a></li><li><a href="#">Blog &amp; Insights</a></li><li><a href="#">Legal Newsletters</a></li><li><a href="#">Careers</a></li><li><a href="#">Contact Us</a></li></ul></div>
-  </div>
-  <div class="f-bottom"><span class="f-copy">© 2026 Nyay Vistar Technologies Pvt. Ltd. All rights reserved. · Registered in India</span><div class="f-meta"><a href="#">Privacy Policy</a><a href="#">Terms of Use</a><a href="#">Refund Policy</a><a href="#">Security</a></div></div>
-</footer>
+    <div class="section-inner" style="padding-top:80px;">
+      <div class="nationwide-header">
+        <p class="eyebrow">Nationwide Legal Services</p>
+        <h2 class="heading-xl">Resolving Legal Challenges Pan India</h2>
+      </div>
+      <div class="nationwide-cards">
+        <div class="nw-card">
+          <div class="nw-card-divider"></div>
+          <div class="nw-card-icon">
+            <img src="assets/images/slide5_Image_0.png" alt="Nationwide Reach icon" loading="lazy" />
+          </div>
+          <div class="nw-card-title">Nationwide Reach</div>
+          <p class="nw-card-body">Our Company offers comprehensive legal &amp; financial solutions across India, ensuring legal representation is available even in remote areas.</p>
+        </div>
+        <div class="nw-card">
+          <div class="nw-card-divider"></div>
+          <div class="nw-card-icon">
+            <img src="assets/images/slide5_Image_1.png" alt="Accessible Network icon" loading="lazy" />
+          </div>
+          <div class="nw-card-title">Accessible Network</div>
+          <p class="nw-card-body">Utilizing a vast network of legal professionals, we ensure our services are accessible to all clients, regardless of geographical constraints.</p>
+        </div>
+        <div class="nw-card">
+          <div class="nw-card-divider"></div>
+          <div class="nw-card-icon" style="background:#DABADD;">
+            <!-- Client-centric icon (SVG placeholder) -->
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#272525" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <div class="nw-card-title">Client-Centric</div>
+          <p class="nw-card-body">Every client is treated with utmost respect and care, with our approach built around their specific needs and contexts.</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
-<script>
-window.addEventListener('scroll',()=>document.getElementById('main-nav').classList.toggle('scrolled',scrollY>40))
-const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.style.opacity='1';e.target.style.transform='translateY(0)'}}),{threshold:.07})
-document.querySelectorAll('.svc-card,.s-item,.tcard,.proc-step,.about-visual,.mock,.vis-photo').forEach((el,i)=>{el.style.cssText+='opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease;transition-delay:'+(i%6*.08)+'s';obs.observe(el)})
-document.querySelectorAll('#ptabs .ptab').forEach(t=>t.addEventListener('click',()=>{document.querySelectorAll('#ptabs .ptab').forEach(x=>x.classList.remove('active'));t.classList.add('active')}))
-// Counter
-function animN(el,v,s){let t=null;(function step(ts){if(!t)t=ts;const p=Math.min((ts-t)/1800,1),e=1-Math.pow(1-p,3);el.innerHTML=Math.round(e*v)+`<span class="u">${s}</span>`;p<1&&requestAnimationFrame(step)})(performance.now())}
-new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting&&!e.target.dataset.done){e.target.dataset.done='1';e.target.querySelectorAll('.s-num').forEach(n=>animN(n,+n.dataset.val,n.dataset.suf))}}),{threshold:.3}).observe(document.querySelector('.stats-sec'))
-</script>
+  <!-- ============================================================
+       SLIDE 6: SECTORS
+  ============================================================ -->
+  <section id="sectors" class="section" aria-label="Legal Sectors">
+    <div class="deco-header" aria-hidden="true">
+      <div class="bar-group left"><div class="b1"></div><div class="b2"></div><div class="b3"></div></div>
+      <div class="bar-group right"><div class="b1"></div><div class="b2"></div><div class="b3"></div></div>
+    </div>
+    <div class="section-inner" style="padding-top:80px;">
+      <div class="sectors-grid">
+        <div class="sectors-left">
+          <p class="eyebrow">Comprehensive Legal Expertise</p>
+          <h2 class="heading-xl">Sectors</h2>
+          <div class="sectors-columns">
+            <div class="sector-item">Corporate Commercial</div>
+            <div class="sector-item">Aerospace &amp; Defence</div>
+            <div class="sector-item">Contract Management</div>
+            <div class="sector-item">Foreign Collaboration</div>
+            <div class="sector-item">Startup Advisory</div>
+            <div class="sector-item">Data Protection &amp; Cyber Security</div>
+            <div class="sector-item">NBFC / Fintech Advisory</div>
+            <div class="sector-item">Media, Sports, IT &amp; Entertainment</div>
+            <div class="sector-item">Labour &amp; Employment</div>
+            <div class="sector-item">POSH Compliance &amp; Training</div>
+            <div class="sector-item">Incorporation &amp; Licensing</div>
+            <div class="sector-item">Insurance</div>
+            <div class="sector-item">Tenders Management</div>
+            <div class="sector-item">Pharma &amp; Health Care</div>
+            <div class="sector-item">IPR</div>
+            <div class="sector-item">Consumer Matters</div>
+            <div class="sector-item">Insolvency &amp; Bankruptcy</div>
+            <div class="sector-item">Real Estate &amp; Hospitality</div>
+            <div class="sector-item">Dispute Resolution Mechanism</div>
+            <div class="sector-item"></div>
+          </div>
+        </div>
+        <div class="sectors-right">
+          <img src="assets/images/slide6_Image_0.png" alt="Legal sectors overview" loading="lazy" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SLIDE 7: USP — OUR STRENGTHS
+  ============================================================ -->
+  <section id="usp" class="section" aria-label="Our Strengths and USP">
+    <div class="deco-header" aria-hidden="true">
+      <div class="bar-group left"><div class="b1"></div><div class="b2"></div><div class="b3"></div></div>
+      <div class="bar-group right"><div class="b1"></div><div class="b2"></div><div class="b3"></div></div>
+    </div>
+    <div class="section-inner" style="padding-top:80px;">
+      <div class="usp-header">
+        <h2 class="heading-lg">Our Strengths and Unique Selling Proposition (USP)</h2>
+      </div>
+      <div class="usp-grid">
+        <div class="usp-card">
+          <div class="usp-icon-wrap">
+            <img src="assets/images/slide7_Image_0.png" alt="Legal Acumen" loading="lazy" />
+          </div>
+          <div class="usp-card-title">Legal Acumen</div>
+          <p class="usp-card-body">Deep understanding of Indian law coupled with international legal standards.</p>
+        </div>
+        <div class="usp-card">
+          <div class="usp-icon-wrap">
+            <img src="assets/images/slide7_Image_1.png" alt="Pan-India &amp; Overseas Network" loading="lazy" />
+          </div>
+          <div class="usp-card-title">Pan-India &amp; Overseas Network</div>
+          <p class="usp-card-body">Extensive reach ensures localized support across diverse jurisdictions.</p>
+        </div>
+        <div class="usp-card">
+          <div class="usp-icon-wrap">
+            <img src="assets/images/slide7_Image_2.png" alt="Innovative Solutions" loading="lazy" />
+          </div>
+          <div class="usp-card-title">Innovative Solutions</div>
+          <p class="usp-card-body">Adopting modern legal tech and strategies for efficient case management.</p>
+        </div>
+        <div class="usp-card">
+          <div class="usp-icon-wrap">
+            <img src="assets/images/slide7_Image_3.png" alt="Client Trust" loading="lazy" />
+          </div>
+          <div class="usp-card-title">Client Trust</div>
+          <p class="usp-card-body">Building lasting relationships through transparency and tailored approaches.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SLIDE 8: OUR CLIENTS
+  ============================================================ -->
+  <section id="clients" class="section" style="background:#fdfdfd;" aria-label="Our Clients">
+    <div class="deco-header" aria-hidden="true">
+      <div class="bar-group left"><div class="b1"></div><div class="b2"></div><div class="b3"></div></div>
+      <div class="bar-group right"><div class="b1"></div><div class="b2"></div><div class="b3"></div></div>
+    </div>
+    <div class="section-inner" style="padding-top:80px;">
+      <div class="clients-header">
+        <p class="eyebrow">Diverse Client Engagements</p>
+        <h2 class="heading-lg">Our Clients</h2>
+      </div>
+      <div class="clients-grid">
+        <div class="client-card">
+          <div class="client-card-title">Individuals</div>
+          <p class="client-card-body">Comprehensive legal service for all types of matters.</p>
+        </div>
+        <div class="client-card">
+          <div class="client-card-title">Banks &amp; Financial Institutions</div>
+          <p class="client-card-body">Specialized services in compliance and complex financial issues.</p>
+        </div>
+        <div class="client-card">
+          <div class="client-card-title">Private &amp; Public Companies</div>
+          <p class="client-card-body">Expert advice on corporate governance and compliance challenges in India &amp; Overseas.</p>
+        </div>
+        <div class="client-card">
+          <div class="client-card-title">Startups &amp; MSMEs</div>
+          <p class="client-card-body">Legal guidance fostering growth and sustainability for emerging businesses.</p>
+        </div>
+        <div class="client-card">
+          <div class="client-card-title">Government Cases</div>
+          <p class="client-card-body">Representation and consultation in governmental regulations and compliance.</p>
+        </div>
+        <div class="client-card">
+          <div class="client-card-title">Sector-Specific Services</div>
+          <p class="client-card-body">Tailored legal solutions enhancing compliance across various industries.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SLIDE 9: CASE STATISTICS & SUCCESS STORIES
+  ============================================================ -->
+  <section id="stats" class="section" aria-label="Case Statistics and Success Stories">
+    <div class="deco-header" aria-hidden="true">
+      <div class="bar-group left"><div class="b1"></div><div class="b2"></div><div class="b3"></div></div>
+      <div class="bar-group right"><div class="b1"></div><div class="b2"></div><div class="b3"></div></div>
+    </div>
+    <div class="section-inner" style="padding-top:80px;">
+      <div class="stats-header">
+        <p class="eyebrow">Proven Success in Legal Resolutions</p>
+        <h2 class="heading-lg">Case Statistics and Success Stories</h2>
+      </div>
+      <p class="stats-highlight-label">Success Highlights</p>
+      <div class="stats-numbers" role="list" aria-label="Case statistics">
+        <div class="stat-block" role="listitem">
+          <div class="stat-number">75,000+</div>
+          <div class="stat-label">Cases Filed</div>
+        </div>
+        <div class="stat-divider" aria-hidden="true">=</div>
+        <div class="stat-block" role="listitem">
+          <div class="stat-number">60,000+</div>
+          <div class="stat-label">Successfully Closed</div>
+        </div>
+        <div class="stat-divider" aria-hidden="true">+</div>
+        <div class="stat-block" role="listitem">
+          <div class="stat-number">15,000+</div>
+          <div class="stat-label">Pending Cases</div>
+        </div>
+      </div>
+      <div class="stats-body">
+        <div class="stats-point">
+          <div class="stats-point-dot"></div>
+          <p>Nyay Vistaar provides comprehensive legal services before the Supreme Court of India, representing clients in diverse and high-stake matters with precision, strategy, and integrity.</p>
+        </div>
+        <div class="stats-point">
+          <div class="stats-point-dot"></div>
+          <p>We provide legal services across all the 25 High Courts in India as well as various Tribunals and Commissions across the country.</p>
+        </div>
+        <div class="stats-point">
+          <div class="stats-point-dot"></div>
+          <p>We provide comprehensive legal services across 650+ District &amp; Sessions Courts in India.</p>
+        </div>
+        <div class="stats-point">
+          <div class="stats-point-dot"></div>
+          <p>We deliver legal solutions across India with a network of 700+ associate counsels.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SLIDE 10: OUR PRESENCE (INDIA)
+  ============================================================ -->
+  <section id="presence" class="section" style="background:#fafafa;" aria-label="Our Presence in India">
+    <div class="deco-header" aria-hidden="true">
+      <div class="bar-group left"><div class="b1"></div><div class="b2"></div><div class="b3"></div></div>
+      <div class="bar-group right"><div class="b1"></div><div class="b2"></div><div class="b3"></div></div>
+    </div>
+    <div class="section-inner" style="padding-top:80px;">
+      <div class="presence-grid">
+        <div class="presence-left">
+          <p class="eyebrow">Proven Success in Legal Resolutions</p>
+          <h2 class="heading-lg">Our Presence</h2>
+          <ul class="presence-list" role="list">
+            <li class="presence-item">Supreme Court of India</li>
+            <li class="presence-item">All the High Courts in India (25 HCs)</li>
+            <li class="presence-item">Major District and Sessions Court of India (650+)</li>
+            <li class="presence-item">National Company Law Tribunal (NCLT) &amp; NCLAT</li>
+            <li class="presence-item">Debt Recovery Tribunal (DRT) &amp; (DRAT)</li>
+            <li class="presence-item">Income Tax Appellate Tribunal (ITAT)</li>
+            <li class="presence-item">Central Administrative Tribunal (CAT)</li>
+            <li class="presence-item">National Green Tribunal (NGT)</li>
+            <li class="presence-item">Family Courts</li>
+            <li class="presence-item">Labour Courts &amp; Industrial Tribunals</li>
+            <li class="presence-item">Consumer Courts (Consumer Disputes Redressal Commissions)</li>
+            <li class="presence-item">Motor Accident Claims Tribunals (MACT)</li>
+            <li class="presence-item">Commercial Courts</li>
+            <li class="presence-item">NDPS Courts</li>
+            <li class="presence-item">Civil Courts</li>
+            <li class="presence-item">Criminal Courts</li>
+          </ul>
+        </div>
+        <div class="presence-right">
+          <img src="assets/images/slide10_Picture_2.jpg" alt="India map showing Nyay Vistaar's nationwide presence" loading="lazy" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SLIDE 11: INTERNATIONAL PRESENCE & CONTACT
+  ============================================================ -->
+  <section id="international" class="section" aria-label="International Presence and Contact">
+    <div class="deco-header" aria-hidden="true">
+      <div class="bar-group left"><div class="b1"></div><div class="b2"></div><div class="b3"></div></div>
+      <div class="bar-group right"><div class="b1"></div><div class="b2"></div><div class="b3"></div></div>
+    </div>
+    <div class="section-inner" style="padding-top:80px;">
+      <div class="intl-grid">
+        <div class="intl-left">
+          <p class="eyebrow">Proven Success in Legal Resolutions</p>
+          <h2 class="heading-lg">International Presence</h2>
+          <div class="intl-countries" role="list">
+            <div class="intl-country" role="listitem">🇬🇧 London</div>
+            <div class="intl-country" role="listitem">🇸🇬 Singapore</div>
+            <div class="intl-country" role="listitem">🇦🇪 Dubai</div>
+            <div class="intl-country" role="listitem">🇳🇬 Nigeria</div>
+            <div class="intl-country" role="listitem">🇹🇷 Turkey</div>
+            <div class="intl-country" role="listitem">🇦🇺 Australia</div>
+            <div class="intl-country" role="listitem">🇷🇴 Romania</div>
+          </div>
+          <div class="contact-box">
+            <h3>Contact Us</h3>
+            <p>
+              <strong>Office:</strong><br />
+              D-7, 1st Floor, Sector 41, Noida,<br />
+              Uttar Pradesh – 201303<br /><br />
+              <a href="mailto:contact@nyayvistaar.com">contact@nyayvistaar.com</a><br />
+              <a href="tel:+919217836134">+91 9217836134</a>
+            </p>
+          </div>
+        </div>
+        <div class="intl-right">
+          <img src="assets/images/slide11_Picture_4.png" alt="International legal presence" loading="lazy" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       FOOTER
+  ============================================================ -->
+  <footer>
+    <p>&copy; 2024 <span>Nyay Vistaar</span>. All rights reserved. Your trusted partner for comprehensive legal solutions across India and overseas.</p>
+  </footer>
+
+  <!-- ============================================================
+       SCRIPTS
+  ============================================================ -->
+  <script>
+    // Mobile nav toggle
+    const toggle = document.getElementById('nav-toggle');
+    const navLinks = document.getElementById('nav-links');
+    toggle.addEventListener('click', () => {
+      const isOpen = navLinks.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', String(isOpen));
+    });
+    // Close nav on link click (mobile)
+    navLinks.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        navLinks.classList.remove('open');
+        toggle.setAttribute('aria-expanded', 'false');
+      });
+    });
+
+    // Active nav link on scroll
+    const sections = document.querySelectorAll('section[id]');
+    const navAnchors = document.querySelectorAll('#nav-links a');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          navAnchors.forEach(a => {
+            a.style.borderBottomColor = a.getAttribute('href') === '#' + entry.target.id ? 'var(--gold)' : 'transparent';
+            a.style.color = a.getAttribute('href') === '#' + entry.target.id ? 'var(--gold)' : '';
+          });
+        }
+      });
+    }, { rootMargin: '-40% 0px -55% 0px', threshold: 0 });
+    sections.forEach(s => observer.observe(s));
+  </script>
+
 </body>
 </html>
